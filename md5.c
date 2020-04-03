@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+uint64_t nozerobytes(uint64_t nobits){
+	uint64_t result = 512ULL - (nobits % 512ULL);
+
+	if(result < 65)
+		result += 512;
+	
+	result -= 72;
+	return (result / 8ULL);
+}
+
 int main(int argc, char *argv[]){
 	if(argc != 2){
 		printf("Error: expected single filename as arugment. \n");

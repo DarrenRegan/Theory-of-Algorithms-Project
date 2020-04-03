@@ -21,18 +21,14 @@ make md5
 The following five steps are performed to compute the message digest of the message.
 
 ##### Step 1. Append Padding Bits
+
 ##### Step 2. Append Length
+
 ##### Step 3. Initialize MD Buffer
+
 ##### Step 4. Process Message in 16-Word Blocks
+
 ##### Step 5. Output
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Author
 

@@ -90,9 +90,29 @@ uint64_t nozerobytes(uint64_t nobits){
 	return (result / 8ULL);
 }
 
+
+int nextblock(union block *M, FILE *infile, uint64_t *nobits, enum flag *status){
+	uint8_t i;
+
+	for (nobits = 0, i = 0; fread(&M->eight[i], 1, 1, infile) == 1; *nobits += 8){
+		printf("%02 ", PRIx8, M->eight[i]);
+	}
+
+	printf("%02 ", PRIx8, 0x80); // Bits: 1000 0000
+	for (uint64_t i = nozerobytes(*nobits); i > 0; i --){
+		printf("02 ", PRIx8, 0x00);
+	}
+	printf("%016 ", PRIx64, *nobits);
+}
+
+void nexthash(){
+}
+
+
+
 int main(int argc, char *argv[]){
 
-	uint32_t x = 0x0f0f0f0f;
+/*	uint32_t x = 0x0f0f0f0f;
 	uint32_t y = 0xcccccccc;
         uint32_t z = 0x55555555;
 
@@ -104,7 +124,7 @@ int main(int argc, char *argv[]){
 	printf("G(x,y,z) = %08x\n", G(x, y, z));
 	printf("H(x,y,z) = %08x\n", H(x, y, z));
 	printf("I(x,y,z) = %08x\n", I(x, y, z));
-
+*/
 
 	if(argc != 2){
 		printf("Error: expected single filename as arugment. \n");
@@ -117,23 +137,20 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
+	uint32_t H[] = {A, B, C, D};
 	uint8_t i;
 	union block M;
-	uint64_t nobits;
+	uint64_t nobits = 0;
+	enum flag status = READ;
 
 	
-	//Reads 1 bit, 1 copy of 1 bit from infile
-	for (nobits = 0, i = 0; fread(&M.eight[i], 1, 1, infile) == 1; nobits += 8){
-		printf("%02 ", PRIx8, M.eight[i]);
+	// Read through all of the padded message blocks.
+	while (nextblock(&M.eight, infile)){
+		// Calculate the next hash value.
+		nexthash(&M, &H);
 	}
 
-	printf("%02 ", PRIx8, 0x80); // Bits: 1000 0000
-	
-	for (uint64_t i = nozerobytes(nobits); i > 0; i--){
-		printf("%02 ", PRIx8, 0x00);
-	}
 
-	printf("%016 ", PRIx64, nobits);
 	fclose(infile);
 	
 	return 0;

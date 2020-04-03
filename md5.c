@@ -15,9 +15,18 @@ uint32_t D = 0x76543210;
 uint32_t F(uint32_t x, uint32_t y, uint32_t z){
 	return (x & y) | ((~x) & z);
 }
-//G
-//H
-//I
+
+uint32_t G(uint32_t x, uint32_t y, uint32_t z){
+	return (x & z) | (y & (~z));
+}
+
+uint32_t H(uint32_t x, uint32_t y, uint32_t z){
+	return 0;
+}
+
+uint32_t I(uint32_t x, uint32_t y, uint32_t z){
+	return 0;
+}
 
 uint64_t nozerobytes(uint64_t nobits){
 
@@ -43,7 +52,7 @@ int main(int argc, char *argv[]){
   	printf("z        = %08x\n", z);
 
 	printf("F(x,y,z) = %08x\n", F(x, y, z));
-	printf("G(x,y,z) =");
+	printf("G(x,y,z) = %08x\n", G(x, y, z));
 	printf("H(x,y,z) =");
 	printf("I(x,y,z) =");
 

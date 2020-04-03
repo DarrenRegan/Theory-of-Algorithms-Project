@@ -69,31 +69,31 @@ uint32_t I(uint32_t x, uint32_t y, uint32_t z){
 
 //Page 10&11 of md5 memo
 void FF(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t k, uint32_t s, uint32_t ac) {
-    u_int32_t sum = (*a + F(b, c, d) + k + ac);
+    uint32_t sum = (*a + F(b, c, d) + k + ac);
     uint32_t f = F(b, c, d);
     // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, f, ac, k, s);
-    *a = b + LEFTROTATE(sum, s);
+    *a = b + ROTATE_LEFT(sum, s);
 }
 
 void GG(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
-    u_int32_t sum = (*a + G(b, c, d) + x + ac);//(a) += F ((b), (c), (d)) + (x) + (UINT4)(ac);
+    uint32_t sum = (*a + G(b, c, d) + x + ac);//(a) += F ((b), (c), (d)) + (x) + (UINT4)(ac);
     uint32_t g = G(b, c, d);
     //printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, g, ac, x, s);
-    *a = b + LEFTROTATE(sum, s);//(a) = ROTATE_LEFT ((a), (s));
+    *a = b + ROTATE_LEFT(sum, s);//(a) = ROTATE_LEFT ((a), (s));
 }
 
 void HH(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
-    u_int32_t sum = (*a + H(b, c, d) + x + ac);
+    uint32_t sum = (*a + H(b, c, d) + x + ac);
     uint32_t h = H(b, c, d);
     // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, h, ac, x, s);
-    *a = b + LEFTROTATE(sum, s);
+    *a = b + ROTATE_LEFT(sum, s);
 }
 
 void II(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
-    u_int32_t sum = (*a + I(b, c, d) + x + ac);
+    uint32_t sum = (*a + I(b, c, d) + x + ac);
     uint32_t i = I(b, c, d);
     // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, i, ac, x, s);
-    *a = b + LEFTROTATE(sum, s);
+    *a = b + ROTATE_LEFT(sum, s);
 }
 
 
@@ -123,18 +123,39 @@ uint64_t nozerobytes(uint64_t nobits){
 
 
 int nextblock(union block *M, FILE *infile, uint64_t *nobits, enum flag *status){
-	uint8_t i;
 
-	for (nobits = 0, i = 0; fread(&M->eight[i], 1, 1, infile) == 1; *nobits += 8){
-		printf("%02 ", PRIx8, M->eight[i]);
-	}
+	size_t nobytesread = fread(&M->eight, 1, 64, infile);
+    	*nobits += nobytesread * 8;
 
-	printf("%02 ", PRIx8, 0x80); // Bits: 1000 0000
-	for (uint64_t i = nozerobytes(*nobits); i > 0; i --){
-		printf("02 ", PRIx8, 0x00);
+	if (*status == FINISH) {
+		return 0;
 	}
-	printf("%016 ", PRIx64, *nobits);
-}
+	//PAD0
+	if (*status == PAD0) {
+		for (int i = 0; i < 57; i++)
+        		M->eight[i] = 0;
+        	M->sixfour[7] = *nobits;
+        	*status = FINISH;
+        	return 1;
+    	 }
+	if (nobytesread == 64) {
+        	return 1;
+   	 } else if (nobytesread < 56) {
+        	M->eight[nobytesread] = 0x80;//1
+        	for (int i = nobytesread + 1; i < 56; i++)
+            		M->eight[i] = 0;
+        	M->sixfour[7] = *nobits;
+        	*status = FINISH;
+        	return 1;
+	} else {// >= 56 & < 64
+        	M->eight[nobytesread] = 0x80;//1
+        	for (int i = nobytesread + 1; i < 64; i++) {
+            		M->eight[i] = 0;
+        	}
+        	*status = PAD0;
+        	return 1;
+    	}	
+}//nextblock
 
 void nexthash(union block *M, uint32_t *H){
 	//Pg 11,12,13 md5 memo
@@ -261,16 +282,22 @@ int main(int argc, char *argv[]){
 
 	
 	// Read through all of the padded message blocks.
-	while (nextblock(&M.eight, infile)){
+	while (nextblock(&M, infile, &nobits, &status)){
 		// Calculate the next hash value.
-		nexthash(&M, &H);
+		nexthash(&M, H);
 	}
 
-	for (int i = 0; i < 8; i++){
-		printf("%02",o PRIX32, H[i]);
-	}
+	for (int o = 0; o < 8; o++)
+		printf("%x ", M.sixfour[o]);
+	
+	printf("\n");
+	//https://stackoverflow.com/questions/17912978/printing-integers-as-a-set-of-4-bytes-arranged-in-little-endian
+	for (int i = 0; i < 4; ++i)
+        	printf("%02x%02x%02x%02x",(H[i] >> 0 ) & 0xFF
+					 ,(H[i] >> 8 ) & 0xFF
+					 ,(H[i] >> 16) & 0xFF
+					 ,(H[i] >> 24) & 0xFF);
 
-	printf("/n");
 	fclose(infile);
 	
 	return 0;

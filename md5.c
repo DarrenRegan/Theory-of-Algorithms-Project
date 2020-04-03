@@ -71,28 +71,24 @@ uint32_t I(uint32_t x, uint32_t y, uint32_t z){
 void FF(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t k, uint32_t s, uint32_t ac) {
     uint32_t sum = (*a + F(b, c, d) + k + ac);
     uint32_t f = F(b, c, d);
-    // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, f, ac, k, s);
     *a = b + ROTATE_LEFT(sum, s);
 }
 
 void GG(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
     uint32_t sum = (*a + G(b, c, d) + x + ac);//(a) += F ((b), (c), (d)) + (x) + (UINT4)(ac);
     uint32_t g = G(b, c, d);
-    //printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, g, ac, x, s);
     *a = b + ROTATE_LEFT(sum, s);//(a) = ROTATE_LEFT ((a), (s));
 }
 
 void HH(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
     uint32_t sum = (*a + H(b, c, d) + x + ac);
     uint32_t h = H(b, c, d);
-    // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, h, ac, x, s);
     *a = b + ROTATE_LEFT(sum, s);
 }
 
 void II(uint32_t *a, uint32_t b, uint32_t c, uint32_t d, uint32_t x, uint32_t s, uint32_t ac) {
     uint32_t sum = (*a + I(b, c, d) + x + ac);
     uint32_t i = I(b, c, d);
-    // printf("rotateLeft(%x + %x + %x + %x, %d)\n", *a, i, ac, x, s);
     *a = b + ROTATE_LEFT(sum, s);
 }
 
@@ -165,6 +161,7 @@ void nexthash(union block *M, uint32_t *H){
 	copyH[2] = H[2];
 	copyH[3] = H[3];
 
+	/* MD5 basic transformation. Transforms state based on block. */
 	/* Round 1 */
 	FF(&H[0], H[1], H[2], H[3], M->threetwo[0], S11, 0xd76aa478);  /* 1 */
     	FF(&H[3], H[0], H[1], H[2], M->threetwo[1], S12, 0xe8c7b756);  /* 2 */
@@ -198,47 +195,47 @@ void nexthash(union block *M, uint32_t *H){
     	GG(&H[2], H[3], H[0], H[1], M->threetwo[3], S23, 0xf4d50d87);  /* 27 */
     	GG(&H[1], H[2], H[3], H[0], M->threetwo[8], S24, 0x455a14ed);  /* 28 */
     	GG(&H[0], H[1], H[2], H[3], M->threetwo[13], S21, 0xa9e3e905); /* 29 */
-    	GG(&H[3], H[0], H[1], H[2], M->threetwo[2], S22, 0xfcefa3f8); /* 30 */
-    	GG(&H[2], H[3], H[0], H[1], M->threetwo[7], S23, 0x676f02d9); /* 31 */
+    	GG(&H[3], H[0], H[1], H[2], M->threetwo[2], S22, 0xfcefa3f8);  /* 30 */
+    	GG(&H[2], H[3], H[0], H[1], M->threetwo[7], S23, 0x676f02d9);  /* 31 */
     	GG(&H[1], H[2], H[3], H[0], M->threetwo[12], S24, 0x8d2a4c8a); /* 32 */
     	printf("\n");
 
     	/* Round 3 */
-   	HH(&H[0], H[1], H[2], H[3], M->threetwo[5], S31, 0xfffa3942); /* 33 */
-    	HH(&H[3], H[0], H[1], H[2], M->threetwo[8], S32, 0x8771f681); /* 34 */
+   	HH(&H[0], H[1], H[2], H[3], M->threetwo[5], S31, 0xfffa3942);  /* 33 */
+    	HH(&H[3], H[0], H[1], H[2], M->threetwo[8], S32, 0x8771f681);  /* 34 */
     	HH(&H[2], H[3], H[0], H[1], M->threetwo[11], S33, 0x6d9d6122); /* 35 */
     	HH(&H[1], H[2], H[3], H[0], M->threetwo[14], S34, 0xfde5380c); /* 36 */
-    	HH(&H[0], H[1], H[2], H[3], M->threetwo[1], S31, 0xa4beea44); /* 37 */
-    	HH(&H[3], H[0], H[1], H[2], M->threetwo[4], S32, 0x4bdecfa9); /* 38 */
-    	HH(&H[2], H[3], H[0], H[1], M->threetwo[7], S33, 0xf6bb4b60); /* 39 */
+    	HH(&H[0], H[1], H[2], H[3], M->threetwo[1], S31, 0xa4beea44);  /* 37 */
+    	HH(&H[3], H[0], H[1], H[2], M->threetwo[4], S32, 0x4bdecfa9);  /* 38 */
+    	HH(&H[2], H[3], H[0], H[1], M->threetwo[7], S33, 0xf6bb4b60);  /* 39 */
     	HH(&H[1], H[2], H[3], H[0], M->threetwo[10], S34, 0xbebfbc70); /* 40 */
     	HH(&H[0], H[1], H[2], H[3], M->threetwo[13], S31, 0x289b7ec6); /* 41 */
-    	HH(&H[3], H[0], H[1], H[2], M->threetwo[0], S32, 0xeaa127fa); /* 42 */
-    	HH(&H[2], H[3], H[0], H[1], M->threetwo[3], S33, 0xd4ef3085); /* 43 */
-    	HH(&H[1], H[2], H[3], H[0], M->threetwo[6], S34, 0x4881d05); /* 44 */
-    	HH(&H[0], H[1], H[2], H[3], M->threetwo[9], S31, 0xd9d4d039); /* 45 */
+    	HH(&H[3], H[0], H[1], H[2], M->threetwo[0], S32, 0xeaa127fa);  /* 42 */
+    	HH(&H[2], H[3], H[0], H[1], M->threetwo[3], S33, 0xd4ef3085);  /* 43 */
+    	HH(&H[1], H[2], H[3], H[0], M->threetwo[6], S34, 0x4881d05);   /* 44 */
+    	HH(&H[0], H[1], H[2], H[3], M->threetwo[9], S31, 0xd9d4d039);  /* 45 */
     	HH(&H[3], H[0], H[1], H[2], M->threetwo[12], S32, 0xe6db99e5); /* 46 */
    	HH(&H[2], H[3], H[0], H[1], M->threetwo[15], S33, 0x1fa27cf8); /* 47 */
-    	HH(&H[1], H[2], H[3], H[0], M->threetwo[2], S34, 0xc4ac5665); /* 48 */
+    	HH(&H[1], H[2], H[3], H[0], M->threetwo[2], S34, 0xc4ac5665);  /* 48 */
     	printf("\n");
 
     	/* Round 4 */
-    	II(&H[0], H[1], H[2], H[3], M->threetwo[0], S41, 0xf4292244); /* 49 */
-    	II(&H[3], H[0], H[1], H[2], M->threetwo[7], S42, 0x432aff97); /* 50 */
+    	II(&H[0], H[1], H[2], H[3], M->threetwo[0], S41, 0xf4292244);  /* 49 */
+    	II(&H[3], H[0], H[1], H[2], M->threetwo[7], S42, 0x432aff97);  /* 50 */
     	II(&H[2], H[3], H[0], H[1], M->threetwo[14], S43, 0xab9423a7); /* 51 */
-    	II(&H[1], H[2], H[3], H[0], M->threetwo[5], S44, 0xfc93a039); /* 52 */
+    	II(&H[1], H[2], H[3], H[0], M->threetwo[5], S44, 0xfc93a039);  /* 52 */
     	II(&H[0], H[1], H[2], H[3], M->threetwo[12], S41, 0x655b59c3); /* 53 */
-   	II(&H[3], H[0], H[1], H[2], M->threetwo[3], S42, 0x8f0ccc92); /* 54 */
+   	II(&H[3], H[0], H[1], H[2], M->threetwo[3], S42, 0x8f0ccc92);  /* 54 */
     	II(&H[2], H[3], H[0], H[1], M->threetwo[10], S43, 0xffeff47d); /* 55 */
-    	II(&H[1], H[2], H[3], H[0], M->threetwo[1], S44, 0x85845dd1); /* 56 */
-    	II(&H[0], H[1], H[2], H[3], M->threetwo[8], S41, 0x6fa87e4f); /* 57 */
+    	II(&H[1], H[2], H[3], H[0], M->threetwo[1], S44, 0x85845dd1);  /* 56 */
+    	II(&H[0], H[1], H[2], H[3], M->threetwo[8], S41, 0x6fa87e4f);  /* 57 */
     	II(&H[3], H[0], H[1], H[2], M->threetwo[15], S42, 0xfe2ce6e0); /* 58 */
-    	II(&H[2], H[3], H[0], H[1], M->threetwo[6], S43, 0xa3014314); /* 59 */
+    	II(&H[2], H[3], H[0], H[1], M->threetwo[6], S43, 0xa3014314);  /* 59 */
     	II(&H[1], H[2], H[3], H[0], M->threetwo[13], S44, 0x4e0811a1); /* 60 */
-    	II(&H[0], H[1], H[2], H[3], M->threetwo[4], S41, 0xf7537e82); /* 61 */
+    	II(&H[0], H[1], H[2], H[3], M->threetwo[4], S41, 0xf7537e82);  /* 61 */
     	II(&H[3], H[0], H[1], H[2], M->threetwo[11], S42, 0xbd3af235); /* 62 */
-    	II(&H[2], H[3], H[0], H[1], M->threetwo[2], S43, 0x2ad7d2bb); /* 63 */
-    	II(&H[1], H[2], H[3], H[0], M->threetwo[9], S44, 0xeb86d391); /* 64 */
+    	II(&H[2], H[3], H[0], H[1], M->threetwo[2], S43, 0x2ad7d2bb);  /* 63 */
+    	II(&H[1], H[2], H[3], H[0], M->threetwo[9], S44, 0xeb86d391);  /* 64 */
     	printf("\n");
 
     	H[0] += copyH[0];

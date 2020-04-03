@@ -105,7 +105,7 @@ int nextblock(union block *M, FILE *infile, uint64_t *nobits, enum flag *status)
 	printf("%016 ", PRIx64, *nobits);
 }
 
-void nexthash(){
+void nexthash(union block *M, uint32_t *H){
 }
 
 
@@ -150,7 +150,11 @@ int main(int argc, char *argv[]){
 		nexthash(&M, &H);
 	}
 
+	for (int i = 0; i < 8; i++){
+		printf("%02",o PRIX32, H[i]);
+	}
 
+	printf("/n");
 	fclose(infile);
 	
 	return 0;

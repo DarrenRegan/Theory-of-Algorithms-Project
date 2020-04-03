@@ -1,5 +1,21 @@
+// Darren Regan - G00326934
+// MD5 Implementation Project
+// https://tools.ietf.org/html/rfc1321
 #include <stdio.h>
 #include <inttypes.h>
+
+
+// Initialize MD Buffer - Section 3.3
+uint32_t A = 0x1234567;
+uint32_t B = 0x89abcdef;
+uint32_t C = 0xfedcba98;
+uint32_t D = 0x76543210;
+
+// Process Message in 16-Word Blocks - Section 3.4
+//F
+//G
+//H
+//I
 
 uint64_t nozerobytes(uint64_t nobits){
 

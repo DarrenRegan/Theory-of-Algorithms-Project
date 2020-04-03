@@ -1,8 +1,5 @@
-# Theory-of-Algorithms-Project
-Theory of Algorithms md5
-[![GitHub release](https://img.shields.io/badge/Download-APK-green)](https://github.com/DarrenRegan/Final-Year-Project/releases/latest/download/EcommereceApp.apk)
-[![GitHub release](https://img.shields.io/badge/Download-Dissertation-green)](https://github.com/DarrenRegan/Final-Year-Project/raw/master/Final_Year_Dissertation.pdf)
-
+# Theory-of-Algorithms-Project - MD5 message-digest algorithm. 
+The algorithm takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. The MD5 algorithm is designed to be quite fast on 32-bit machines. In addition, the MD5 algorithm does not require any large substitution tables; the algorithm can be coded quite compactly.
 ### Installing
 
 1. Clone the repo
@@ -16,14 +13,6 @@ git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 make md5
 ./md5 test.txt
 ```
-## Testing 
-
-Testing & Test Plan are provided in an excel file included in this repo called Test Plan.xlsx
-
-Testing Devices used
-* Windows 10 Home & Pro edition - Laptop & Desktop
-* Android Studio Emulators
-
 ### Break down into end to end tests
 
 Explain what these tests test and why

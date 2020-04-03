@@ -28,11 +28,15 @@ uint32_t I(uint32_t x, uint32_t y, uint32_t z){
 	return y ^ (x | (~z));
 }
 
+enum flag {
+	READ, PAD0, PAD1, FINISH
+};
+
 union block {
 	uint64_t sixfour[8];
-	uint16_t threetwo[16];
+	uint32_t threetwo[16];
 	uint8_t eight[64];
-}
+};
 
 uint64_t nozerobytes(uint64_t nobits){
 

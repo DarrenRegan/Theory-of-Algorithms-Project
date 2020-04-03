@@ -54,43 +54,15 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Android Studio](https://developer.android.com/studio)
-* [Kotlin](https://kotlinlang.org/)
-* [Firebase](https://square.github.io/picasso/)
-* [Picasso](https://firebase.google.com/)
-
 ## Author
 
 * [Darren Regan](https://github.com/DarrenRegan)
 
-## License
-
-This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
-
 ## Research Links
 
-* [Firebase Docs](https://firebase.google.com/docs)
-* [Kotlin Docs](https://kotlinlang.org/docs/reference/)
-* [Badges/Shields for README](https://github.com/badges/shields)
-
-**Learning Material**
-
-* https://developer.android.com/kotlin/learn
-* https://codelabs.developers.google.com/codelabs/build-your-first-android-app-kotlin/#0
-* http://rey5137.com/material/
-* [onCClickListener with Intent](https://www.youtube.com/watch?v=ukh3zOLNhmY)
-* [Validation for Database](https://firebaseopensource.com/projects/rosariopfernandes/firextensions/tutorials/realtime-database.md/)
-
-**React Native vs Kotlin Article/Blogs**
-
-* https://stackshare.io/stackups/kotlin-vs-react-native)
-* https://www.netguru.com/codestories/react-native-vs-kotlin-multiplatform
-* https://hackernoon.com/top-pros-cons-comparison-react-native-vs-kotlin-2a0dfd1df3e3
-* https://dzone.com/articles/kotlin-vs-react-native-which-is-better
+* https://tools.ietf.org/html/rfc1321
+* [Print int as set of 4 bytes in little endian](https://stackoverflow.com/questions/17912978/printing-integers-as-a-set-of-4-bytes-arranged-in-little-endian)
+* https://en.wikipedia.org/wiki/MD5
+* [Video - Hashing Algorithms and Security](https://www.youtube.com/watch?v=b4b8ktEV4Bg)
+* [Video - SHA: Secure Hashing Algorithm](https://www.youtube.com/watch?v=DMtFhACPnTY)
 

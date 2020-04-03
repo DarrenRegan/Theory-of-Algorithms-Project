@@ -3,33 +3,19 @@ Theory of Algorithms md5
 [![GitHub release](https://img.shields.io/badge/Download-APK-green)](https://github.com/DarrenRegan/Final-Year-Project/releases/latest/download/EcommereceApp.apk)
 [![GitHub release](https://img.shields.io/badge/Download-Dissertation-green)](https://github.com/DarrenRegan/Final-Year-Project/raw/master/Final_Year_Dissertation.pdf)
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-This application was made in Android Studio's lastest version 3.5.3 for Windows 10
-
-* Git
-* Android Studio
-
 ### Installing
 
 1. Clone the repo
 
 ```
-git clone https://github.com/DarrenRegan/Final-Year-Project.git
+git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 ```
 
-2. Open Project in Android Studio
-
+2. cd Theory-of-Algorithms-Project and run commands
 ```
-asd
+make md5
+./md5 test.txt
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Testing 
 
 Testing & Test Plan are provided in an excel file included in this repo called Test Plan.xlsx

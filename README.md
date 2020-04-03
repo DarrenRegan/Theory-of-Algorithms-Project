@@ -1,5 +1,9 @@
 # Theory-of-Algorithms-Project - MD5 message-digest algorithm. 
-The algorithm takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. The MD5 algorithm is designed to be quite fast on 32-bit machines. In addition, the MD5 algorithm does not require any large substitution tables; the algorithm can be coded quite compactly.
+
+### Introduction
+The algorithm takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. The MD5 algorithm is designed to be quite fast on 32-bit machines. In addition, the MD5 algorithm does not require any large substitution tables; the algorithm can be coded quite compactly. MD5 is used for verifying files and transmissions, it should never be used for more as its very easy to break.
+
+
 ### Installing
 
 1. Clone the repo
@@ -13,13 +17,14 @@ git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 make md5
 ./md5 test.txt
 ```
-### Break down into end to end tests
+###  MD5 Algorithm Description
+The following five steps are performed to compute the message digest of the message.
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+##### Step 1. Append Padding Bits
+##### Step 2. Append Length
+##### Step 3. Initialize MD Buffer
+##### Step 4. Process Message in 16-Word Blocks
+##### Step 5. Output
 
 ### And coding style tests
 

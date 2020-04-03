@@ -6,7 +6,7 @@
 
 
 // Initialize MD Buffer - Section 3.3
-uint32_t A = 0x1234567;
+uint32_t A = 0x01234567;
 uint32_t B = 0x89abcdef;
 uint32_t C = 0xfedcba98;
 uint32_t D = 0x76543210;
@@ -74,13 +74,13 @@ int main(int argc, char *argv[]){
 	
 	//Reads 1 bit, 1 copy of 1 bit from infile
 	for(nobits = 0; fread(&b, 1, 1, infile) == 1; nobits +=8){
-		printf("%02x ", PRIx8, b);
+		printf("%02 ", PRIx8, b);
 	}
 
 	printf("%02 ", PRIx8, 0x80); // Bits: 1000 0000
 	
 	for(uint64_t i = nozerobytes(nobits); i > 0; i--){
-		printf("%02x ", PRIx8, 0x00);
+		printf("%02 ", PRIx8, 0x00);
 	}
 
 	printf("%016 ", PRIx64, nobits);

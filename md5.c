@@ -21,11 +21,11 @@ uint32_t G(uint32_t x, uint32_t y, uint32_t z){
 }
 
 uint32_t H(uint32_t x, uint32_t y, uint32_t z){
-	return 0;
+	return x ^ y ^ z;
 }
 
 uint32_t I(uint32_t x, uint32_t y, uint32_t z){
-	return 0;
+	return y ^ (x | (~z));
 }
 
 uint64_t nozerobytes(uint64_t nobits){
@@ -53,10 +53,9 @@ int main(int argc, char *argv[]){
 
 	printf("F(x,y,z) = %08x\n", F(x, y, z));
 	printf("G(x,y,z) = %08x\n", G(x, y, z));
-	printf("H(x,y,z) =");
-	printf("I(x,y,z) =");
+	printf("H(x,y,z) = %08x\n", H(x, y, z));
+	printf("I(x,y,z) = %08x\n", I(x, y, z));
 
-	
 
 	if(argc != 2){
 		printf("Error: expected single filename as arugment. \n");

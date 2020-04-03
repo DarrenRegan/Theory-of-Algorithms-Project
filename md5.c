@@ -28,6 +28,12 @@ uint32_t I(uint32_t x, uint32_t y, uint32_t z){
 	return y ^ (x | (~z));
 }
 
+union block {
+	uint64_t sixfour[8];
+	uint16_t threetwo[16];
+	uint8_t eight[64];
+}
+
 uint64_t nozerobytes(uint64_t nobits){
 
 	uint64_t result = 512ULL - (nobits % 512ULL);
@@ -68,18 +74,19 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	uint8_t b;
+	uint8_t i;
+	union block M;
 	uint64_t nobits;
 
 	
 	//Reads 1 bit, 1 copy of 1 bit from infile
-	for(nobits = 0; fread(&b, 1, 1, infile) == 1; nobits +=8){
-		printf("%02 ", PRIx8, b);
+	for (nobits = 0, i = 0; fread(&M.eight[i], 1, 1, infile) == 1; nobits += 8){
+		printf("%02 ", PRIx8, M.eight[i]);
 	}
 
 	printf("%02 ", PRIx8, 0x80); // Bits: 1000 0000
 	
-	for(uint64_t i = nozerobytes(nobits); i > 0; i--){
+	for (uint64_t i = nozerobytes(nobits); i > 0; i--){
 		printf("%02 ", PRIx8, 0x00);
 	}
 

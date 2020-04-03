@@ -11,8 +11,10 @@ uint32_t B = 0x89abcdef;
 uint32_t C = 0xfedcba98;
 uint32_t D = 0x76543210;
 
-// Process Message in 16-Word Blocks - Section 3.4
-//F
+// FGHI - Process Message in 16-Word Blocks - Section 3.4
+uint32_t F(uint32_t x, uint32_t y, uint32_t z){
+	return (x & y) | ((~x) & z);
+}
 //G
 //H
 //I
@@ -31,6 +33,19 @@ uint64_t nozerobytes(uint64_t nobits){
 }
 
 int main(int argc, char *argv[]){
+
+	uint32_t x = 0x0f0f0f0f;
+	uint32_t y = 0xcccccccc;
+        uint32_t z = 0x55555555;
+
+	printf("x        = %08x\n", x);
+   	printf("y        = %08x\n", y);
+  	printf("z        = %08x\n", z);
+
+	printf("F(x,y,z) = %08x\n", F(x, y, z));
+	printf("G(x,y,z) =");
+	printf("H(x,y,z) =");
+	printf("I(x,y,z) =");
 
 	
 

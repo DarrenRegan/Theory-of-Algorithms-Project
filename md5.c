@@ -246,11 +246,19 @@ void nexthash(union block *M, uint32_t *H){
    	H[3] += copyH[3];
 }//nexhhash
 
+// -help, -h HELP COMMAND LINE METHOD - PRINTS INSTRUCTIONS ON HOW TO RUN APP
 void print_usage(){
-    printf("Help : To run this program, first type make md5, this will compile the code, then type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
-    exit(2);
+	printf("Help : To run this program, first type make md5, this will compile the code, then type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
+   	exit(2);
 }
 
+// -test, -t TEST COMMAND LINE METHOD - PRINTS OUT TESTS
+void print_test(){
+    	printf ("Here are the unit tests (-t)(-test)\n");
+	exit(2);
+}
+
+// MAIN METHOD
 int main(int argc, char *argv[]){
 
 /*	uint32_t x = 0x0f0f0f0f;
@@ -266,15 +274,19 @@ int main(int argc, char *argv[]){
 	printf("H(x,y,z) = %08x\n", H(x, y, z));
 	printf("I(x,y,z) = %08x\n", I(x, y, z));
 */
-
+	//Command line options for -help, -test
     	int option;
-    	while((option = getopt(argc, argv, "h")) !=-1){
+    	while((option = getopt(argc, argv, "ht")) !=-1){
         	switch (option){
+		// Print -h, -help option	
             	case 'h' :
                 	print_usage();
                 	break;
+		case 't':
+		        print_test();
+		    	break;
             	default :
-                	printf("Error");
+                	printf("Error, use -help command for help or -t -test for unit tests");
         	}
    	}
 

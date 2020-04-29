@@ -248,7 +248,8 @@ void nexthash(union block *M, uint32_t *H){
 
 // -help, -h HELP COMMAND LINE METHOD - PRINTS INSTRUCTIONS ON HOW TO RUN APP
 void print_usage(){
-	printf("Help : To run this program, first type make md5, this will compile the code, then type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
+	printf(" Help : To run this program, first type make md5, this will compile the code\n\tthen type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
+	printf(" Test : To run Unit Tests, type ./md5 -test \n");
    	exit(2);
 }
 

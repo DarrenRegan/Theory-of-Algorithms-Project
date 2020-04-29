@@ -260,7 +260,7 @@ void print_test(){
 	uint32_t y = 0xcccccccc;
         uint32_t z = 0x55555555;
 
-    	printf ("\n  Here are the unit tests (-t)(-test)\n");
+    	printf("\n  Here are the unit tests (-t)(-test)\n");
 	printf("\n  UNIT TESTS FOR FGHI - Process Message in 16-Word Blocks");
 
 	printf("\n  x        = %08x\n", x);
@@ -275,6 +275,7 @@ void print_test(){
 	exit(2);
 }
 
+// -versions, -v PRINT CURRENT INSTALLITION VERSIONS
 void print_versions(){
 	printf("\nvim-8.1.0875\n");
 	printf("Python 3.7.3\n");

@@ -254,26 +254,28 @@ void print_usage(){
 
 // -test, -t TEST COMMAND LINE METHOD - PRINTS OUT TESTS
 void print_test(){
-    	printf ("Here are the unit tests (-t)(-test)\n");
+	uint32_t x = 0x0f0f0f0f;
+	uint32_t y = 0xcccccccc;
+        uint32_t z = 0x55555555;
+
+    	printf ("\n  Here are the unit tests (-t)(-test)\n");
+	printf("\n  UNIT TESTS FOR FGHI - Process Message in 16-Word Blocks");
+
+	printf("\n  x        = %08x\n", x);
+   	printf("  y        = %08x\n", y);
+  	printf("  z        = %08x\n", z);
+
+	printf("\n  F(x,y,z) = %08x\n", F(x, y, z));
+	printf("  G(x,y,z) = %08x\n", G(x, y, z));
+	printf("  H(x,y,z) = %08x\n", H(x, y, z));
+	printf("  I(x,y,z) = %08x\n\n", I(x, y, z));
+
 	exit(2);
 }
 
 // MAIN METHOD
 int main(int argc, char *argv[]){
 
-/*	uint32_t x = 0x0f0f0f0f;
-	uint32_t y = 0xcccccccc;
-        uint32_t z = 0x55555555;
-
-	printf("x        = %08x\n", x);
-   	printf("y        = %08x\n", y);
-  	printf("z        = %08x\n", z);
-
-	printf("F(x,y,z) = %08x\n", F(x, y, z));
-	printf("G(x,y,z) = %08x\n", G(x, y, z));
-	printf("H(x,y,z) = %08x\n", H(x, y, z));
-	printf("I(x,y,z) = %08x\n", I(x, y, z));
-*/
 	//Command line options for -help, -test
     	int option;
     	while((option = getopt(argc, argv, "ht")) !=-1){

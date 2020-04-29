@@ -250,6 +250,7 @@ void nexthash(union block *M, uint32_t *H){
 void print_usage(){
 	printf(" Help : To run this program, first type make md5, this will compile the code\n\tthen type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
 	printf(" Test : To run Unit Tests, type ./md5 -test \n");
+	printf(" Vers : To check the current installation versions use -v or -versions \n");
    	exit(2);
 }
 
@@ -274,12 +275,19 @@ void print_test(){
 	exit(2);
 }
 
+void print_versions(){
+	printf("\nvim-8.1.0875\n");
+	printf("Python 3.7.3\n");
+	printf("gcc (Debian 8.3.0-6) 8.3.0\n\n");
+	exit(2);
+}
+
 // MAIN METHOD
 int main(int argc, char *argv[]){
 
 	//Command line options for -help, -test
     	int option;
-    	while((option = getopt(argc, argv, "ht")) !=-1){
+    	while((option = getopt(argc, argv, "htv")) !=-1){
         	switch (option){
 		// Print -h, -help option	
             	case 'h' :
@@ -288,8 +296,11 @@ int main(int argc, char *argv[]){
 		case 't':
 		        print_test();
 		    	break;
+		case 'v':
+			print_versions();
+			break;
             	default :
-                	printf("Error, use -help command for help or -t -test for unit tests");
+                	printf("Error, use -help command for help or -t -test for unit tests or -versions for current installtion versions of applications");
         	}
    	}
 

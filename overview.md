@@ -8,6 +8,7 @@ This repository contains the C code in the file md5.c aswell has a document used
 ### What the code does - Use of MD5
 As explained in the introduction the MD5 algorithm takes an input of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. While the MD5 algorithm was originally designed for use as a secure hash algorithm for authenticating digitial signatures. MD5 has been deprecated for uses other than as a non-cryptographic checksum to verify data integrity and detect unintentional data corruption.
 
+![](images/md5_hashing.jpg)<br>
 
 ## Run
 

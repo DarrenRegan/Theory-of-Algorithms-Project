@@ -5,6 +5,8 @@
 #include <inttypes.h>
 #include <stdint.h>
 #include <string.h>
+#include <getopt.h>
+#include <stdlib.h>
 
 //Page 9
 #define S11 7
@@ -244,6 +246,11 @@ void nexthash(union block *M, uint32_t *H){
    	H[3] += copyH[3];
 }//nexhhash
 
+void print_usage(){
+    printf("Help : To run this program, first type make md5, this will compile the code, then type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
+    exit(2);
+}
+
 int main(int argc, char *argv[]){
 
 /*	uint32_t x = 0x0f0f0f0f;
@@ -259,6 +266,17 @@ int main(int argc, char *argv[]){
 	printf("H(x,y,z) = %08x\n", H(x, y, z));
 	printf("I(x,y,z) = %08x\n", I(x, y, z));
 */
+
+    	int option;
+    	while((option = getopt(argc, argv, "h")) !=-1){
+        	switch (option){
+            	case 'h' :
+                	print_usage();
+                	break;
+            	default :
+                	printf("Error");
+        	}
+   	}
 
 	if(argc != 2){
 		printf("Error: expected single filename as arugment. \n");

@@ -3,6 +3,11 @@
 ## Introduction
 The algorithm takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. The MD5 algorithm is designed to be quite fast on 32-bit machines. In addition, the MD5 algorithm does not require any large substitution tables; the algorithm can be coded quite compactly. MD5 is used for verifying files and transmissions, it should never be used for more as its very easy to break.
 
+This repository contains the C code in the file md5.c aswell has a document used for testing test.txt, a folder of some of the labs that are extremely useful before attempting the project and finally a README and a overview report of the project.
+
+### What the code does - Use of MD5
+As explained in the introduction the MD5 algorithm takes an input of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest" of the input. While the MD5 algorithm was originally designed for use as a secure hash algorithm for authenticating digitial signatures. MD5 has been deprecated for uses other than as a non-cryptographic checksum to verify data integrity and detect unintentional data corruption.
+
 
 ## Run
 

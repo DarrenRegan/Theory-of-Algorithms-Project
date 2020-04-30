@@ -31,8 +31,9 @@ git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 ```
 make md5
 ./md5 test.txt  //Runs MD5 Algorithm on text document
-./md5 -t        //Runs a unit test for FGHI
 ./md5 -h        //Runs help command which gives instructions on commands and how to run app
+./md5 -x        //Runs a MD5 Test suite
+./md5 -t        //Runs a unit test for FGHI
 ./md5 -v        //Displays current versions of software installations
 ```
 

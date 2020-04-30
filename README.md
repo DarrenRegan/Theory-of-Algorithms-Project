@@ -34,14 +34,12 @@ A four-word buffer (A, B, C, D) is used to compute the message digest.
 
 ##### Step 4. Process Message in 16-Word Blocks
 Define four auxiliary functions that each take as input three 32-bit words and produce as output one 32-bit word.
-
+```
 F(X,Y,Z) = XY v not(X) Z
-
 G(X,Y,Z) = XZ v Y not(Z)
-
 H(X,Y,Z) = X xor Y xor Z
-
 I(X,Y,Z) = Y xor (X v not(Z))
+```
 ##### Step 5. Output
 The message digest produced as output is A, B, C, D. That is, we 
 begin with the low-order byte of A, and end with the high-order byte

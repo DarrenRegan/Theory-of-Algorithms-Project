@@ -125,7 +125,9 @@ begin with the low-order byte of A, and end with the high-order byte
 of D.
 
 ## Complexity
-The following five steps are performed to compute the message digest of the message.
+Polynomial time
+
+The MD5 message-digest algorithm is simple to implement, and provides a "fingerprint" or message digest of a message of arbitrary length. It is conjectured that the difficulty of coming up with two messages having the same message digest is on the order of 2^64 operations, and that the difficulty of coming up with any message having a given message digest is on the order of 2^128 operations.
 
 ## References
 

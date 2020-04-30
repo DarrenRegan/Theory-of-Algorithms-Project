@@ -126,6 +126,74 @@ of D.
 
 ## Complexity
 The MD5 message-digest algorithm is simple to implement, and provides a "fingerprint" or message digest of a message of arbitrary length. It is conjectured that the difficulty of coming up with two messages having the same message digest is on the order of 2^64 operations, and that the difficulty of coming up with any message having a given message digest is on the order of 2^128 operations.
+The MD5 algorithm is designed to be slower then other algorithms, the faster it hashes, the easier it is to find collisons.
+
+##### Complexity of the MD5 Algorithm
+MD5 is based on 32-bit words. Within each word, the most significant bit (MSB)
+is the leftmost bit while the least significant bit (LSB) is the rightmost bit. Where
+words must be formed from octet-oriented data, MD5 uses Least Significant
+Byte first (little endian, c.f. Intel 80386), whereas SHA algorithms [3] use Most
+Significant Byte first (big endian, c.f. SPARC).
+The i-th bit of a word a is denoted a[i]. MD5 uses three bit-wise operators:
+“∧” represents the bitwise AND operation with ```(a∧b)[i] = a[i]∧b[i], 0 ≤ i ≤ 31;```
+“∨” represents the bitwise OR operation with ```(a ∨ b)[i] = a[i] ∨ b[i], 0 ≤ i ≤ 31;```
+and “⊕” represents the bitwise exclusive-OR operation with ```(a⊕b)[i] = a[i]⊕b[i],```
+```0 ≤ i ≤ 31.``` MD5 also uses addition modulo 232, which is denoted using “+”.
+Subtraction modulo 232 is denoted using “−”.
+The bit-wise complement of x (equal to 232 − 1 − x) is denoted x. The
+function ROT Lr
+(X) produces a word of the same size as X, but with the bits
+rotated cyclically to the left by r positions. That is, if Y = ROT Lr
+(X), then
+```Y [i] = X[i − r(mod 32)], 0 ≤ i ≤ 31```
+
+
+##### Alogirthms that aim to find collisons/reserve the algorithm
+MD5 has been so common on the internet, that almost everything on the internet used it at some point. Due to this there are a large number of ways to reserve this algorithm and find collisons. Right now you can simply google MD5 algorithm cracker and see a full front page of websites that only need you to copy paste the text to spit out a hash that will most lilely be the same.
+The MD5 is not a good hashing function as it has a relatively short, 128-bit message digest, which makes it fast to compute making it not appropirate for use in cryptography.
+
+In cryptography, a “collision” is when two distinct input values produce the same hash. This is bad, because if there are collisions then the algorithm can be compromised. In 1996, collisions were found in MD5. Further exploits were demonstrated through the beginning of the 21st century. Even so, MD5 is still in widespread use for certain applications, including HTTPS encryption.
+
+MD5 hashing algorithm and its cousin, SHA1, are in widespread use in the Transport Layer Security (TLS) protocol on which HTTPS is based. In fact, even though collisions were found with MD5 as early as 1996, it was still included in TLS as late as 2008. That said, MD5 was banned at that time in TLS certificates but not for other aspects of TLS.
+
+Researchers have devised attacks taking advantages of these weaknesses. Such techniques are called Security Losses from Obsolete and Truncated transcript Hashes, or SLOTH. With significant but easily obtainable (approximately 50 cores) computing power, impersonation attacks can be conducted on TLS-based web sites and applications.
+
+In a paper named Fast Collison Attack on MD5 by Marc Stevens, that the initial value for the attack can have a significant impact in the average complexity of MD5 collision finding. Using 2 conditions on the initial value to avoid very hard situations we reduce our average running time to 67 seconds. Also with reasonable probability a collision can be found in mere seconds, which allows collision finding during a protocol execution.
+
+The algorithm used is an algorithm proposed by Vlastimil Klima. His algorithm was used for the second block and a new similar algorithm for the first block where fulfilling conditions of Q17 no longer happens probabilistically. Both algorithms use the fact that the value of Wt (= mk for some k) can be calculated using the values of Qt−3, . . . , Qt+1 if step t is reversed.
+
+###### Algorithm Block 1 search algorithm
+```
+1. Choose Q1, Q3, . . . , Q16 fulfilling conditions;
+2. Calculate m0, m6, . . . , m15;
+3. Loop until Q17, . . . , Q21 are fulfilling conditions:
+(a) Choose Q17 fulfilling conditions;
+(b) Calculate m1 at t = 16;
+(c) Calculate Q2 and m2, m3, m4, m5;
+(d) Calculate Q18, . . . , Q21;
+4. Loop over all possible Q9, Q10 satisfying conditions such that m11 does not change:
+(a) Calculate m8, m9, m10, m12, m13;
+(b) Calculate Q22, . . . , Q64;
+(c) Verify conditions on Q22, . . . , Q64, T22, T34 and the iv-conditions for the next block.
+Stop searching if all conditions are satisfied and a near-collision is verified.
+5. Start again at step 1.
+```
+###### Algorithm Block 2 search algorithm
+```
+1. Choose Q2, . . . , Q16 fulfilling conditions;
+2. Calculate m5, . . . , m15;
+3. Loop until Q17, . . . , Q21 are fulfilling conditions:
+(a) Choose Q1 fulfilling conditions;
+(b) Calculate m0, . . . , m4;
+(c) Calculate Q17, . . . , Q21;
+4. Loop over all possible Q9, Q10 satisfying conditions such that m11 does not change:
+(a) Calculate m8, m9, m10, m12, m13;
+(b) Calculate Q22, . . . , Q64;
+(c) Verify conditions on Q22, . . . , Q64, T22, T34.
+Stop searching if all conditions are satisfied and a near-collision is verified.
+5. Start again at step 1.
+
+```
 
 ## References
 
@@ -134,4 +202,6 @@ The MD5 message-digest algorithm is simple to implement, and provides a "fingerp
 * [Video - Hashing Algorithms and Security](https://www.youtube.com/watch?v=b4b8ktEV4Bg) - Excellent video on Hashing Algorithms and Security, the video is well worth watching. The video will give you a good idea of the use of Hashing Algorithms if you we're unsure on exactly what they do.
 * [Video - SHA: Secure Hashing Algorithm](https://www.youtube.com/watch?v=DMtFhACPnTY) - Explains Hash Functions and SHA, talks about hash functions for cryptography that are used for message authentication and digital signatures. Explains that MD5 is made to be slow because of it's uses, but these hash functions need to be quick to verify and compute.
 * [Fast Collision Attack on MD5](http://crppit.epfl.ch/documentation/Hash_Function/Examples/Code_Project/Documentation/104.pdf) - Paper on finding collisons in MD5 Algorithm, results showed that they were able to find full MD5 collisions in only minutes on a 3Ghz Pentium4.
-
+* [Musings on the Wang et al. MD5 Collision](https://eprint.iacr.org/2004/264.pdf) - Paper that examines the internal differences and conidtions required for the attack on md5 to be successful.
+* [Finding MD5 Collisions on a Notebook PC Using Multi-message
+Modifications](https://eprint.iacr.org/2005/102.pdf) - Algorithm proposed by Vlastimil Klima to find collisions in MD5

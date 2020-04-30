@@ -15,20 +15,37 @@ git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 2. cd Theory-of-Algorithms-Project and run commands
 ```
 make md5
-./md5 test.txt
+./md5 test.txt  //Runs MD5 Algorithm on text document
+./md5 -t        //Runs a unit test for FGHI
+./md5 -h        //Runs help command which gives instructions on commands and how to run app
+./md5 -v        //Displays current versions of software installations
 ```
 ###  MD5 Algorithm Description
 The following five steps are performed to compute the message digest of the message.
 
 ##### Step 1. Append Padding Bits
+Pad message so that its length is congrugent to 448, module 512. That is, the message is extended so that it is just 64 bits shy of being a multiple of 512 bits long.
 
 ##### Step 2. Append Length
+A 64-bit representation of b is appended to the result of the previous step. In the unlikely event that b is greater than 2^64, then only the low-order 64 bits of b are used.
 
 ##### Step 3. Initialize MD Buffer
+A four-word buffer (A, B, C, D) is used to compute the message digest.
 
 ##### Step 4. Process Message in 16-Word Blocks
+Define four auxiliary functions that each take as input three 32-bit words and produce as output one 32-bit word.
 
+F(X,Y,Z) = XY v not(X) Z
+
+G(X,Y,Z) = XZ v Y not(Z)
+
+H(X,Y,Z) = X xor Y xor Z
+
+I(X,Y,Z) = Y xor (X v not(Z))
 ##### Step 5. Output
+The message digest produced as output is A, B, C, D. That is, we 
+begin with the low-order byte of A, and end with the high-order byte
+of D.
 
 ## Author
 

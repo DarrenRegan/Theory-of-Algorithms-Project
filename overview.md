@@ -125,8 +125,6 @@ begin with the low-order byte of A, and end with the high-order byte
 of D.
 
 ## Complexity
-Polynomial time
-
 The MD5 message-digest algorithm is simple to implement, and provides a "fingerprint" or message digest of a message of arbitrary length. It is conjectured that the difficulty of coming up with two messages having the same message digest is on the order of 2^64 operations, and that the difficulty of coming up with any message having a given message digest is on the order of 2^128 operations.
 
 ## References
@@ -135,4 +133,5 @@ The MD5 message-digest algorithm is simple to implement, and provides a "fingerp
 * [MD5 Wikipedia](https://en.wikipedia.org/wiki/MD5) - provides good information on what the MD5 Algorithm is, what it's used for and the history around it. There is also sections on the vulnerabilities of the algorithm and links to other implementations of such algorithm.
 * [Video - Hashing Algorithms and Security](https://www.youtube.com/watch?v=b4b8ktEV4Bg) - Excellent video on Hashing Algorithms and Security, the video is well worth watching. The video will give you a good idea of the use of Hashing Algorithms if you we're unsure on exactly what they do.
 * [Video - SHA: Secure Hashing Algorithm](https://www.youtube.com/watch?v=DMtFhACPnTY) - Explains Hash Functions and SHA, talks about hash functions for cryptography that are used for message authentication and digital signatures. Explains that MD5 is made to be slow because of it's uses, but these hash functions need to be quick to verify and compute.
+* [Fast Collision Attack on MD5](http://crppit.epfl.ch/documentation/Hash_Function/Examples/Code_Project/Documentation/104.pdf) - Paper on finding collisons in MD5 Algorithm, results showed that they were able to find full MD5 collisions in only minutes on a 3Ghz Pentium4.
 

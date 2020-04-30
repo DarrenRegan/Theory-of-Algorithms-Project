@@ -7,6 +7,7 @@
 #include <string.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <assert.h>
 
 //Page 9
 #define S11 7
@@ -249,7 +250,8 @@ void nexthash(union block *M, uint32_t *H){
 // -help, -h HELP COMMAND LINE METHOD - PRINTS INSTRUCTIONS ON HOW TO RUN APP
 void print_usage(){
 	printf(" Help : To run this program, first type make md5, this will compile the code\n\tthen type./md5 test.txt, to run the test file or replace test.txt with your own file \n");
-	printf(" Test : To run Unit Tests, type ./md5 -test \n");
+	printf(" Test : To run Unit Tests, type ./md5 -t \n");
+	printf(" Test : To run MD5 Test Suite, type ./md5 -x \n");
 	printf(" Vers : To check the current installation versions use -v or -versions \n");
    	exit(2);
 }
@@ -282,13 +284,44 @@ void print_versions(){
 	printf("gcc (Debian 8.3.0-6) 8.3.0\n\n");
 	exit(2);
 }
+// https://tools.ietf.org/html/rfc1321 - PAGES 18,19,20,21
+static void MDPrint(const unsigned char digest [16]){
+	unsigned i;
+
+	for (i = 0; i < 16; i++)
+		printf("%02x", digest[i]);
+}
+
+static void MDString(const char *string){
+	unsigned char digest[16];
+	unsigned len = strlen(string);
+
+	printf("MD5 (\"%s\") = ", string);
+	MDPrint(digest);
+	printf("\n");
+}
+
+static void MDTestSuite(void){
+	printf ("MD5 test suite:\n");
+
+	MDString ("");
+	MDString ("a");
+	MDString ("abc");
+	MDString ("message digest");
+	MDString ("abcdefghijklmnopqrstuvwxyz");
+	MDString ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+	MDString ("1234567890123456789012345678901234567890"
+		  "1234567890123456789012345678901234567890\n");
+
+}
+
 
 // MAIN METHOD
 int main(int argc, char *argv[]){
 
 	//Command line options for -help, -test
     	int option;
-    	while((option = getopt(argc, argv, "htv")) !=-1){
+    	while((option = getopt(argc, argv, "htvx")) !=-1){
         	switch (option){
 		// Print -h, -help option	
             	case 'h' :
@@ -300,8 +333,11 @@ int main(int argc, char *argv[]){
 		case 'v':
 			print_versions();
 			break;
+		case 'x':
+			MDTestSuite();
+			break;
             	default :
-                	printf("Error, use -help command for help or -t -test for unit tests or -versions for current installtion versions of applications");
+                	printf("Error, use -help command for help or -t/-x for unit tests or -versions for current installtion versions of applications");
         	}
    	}
 

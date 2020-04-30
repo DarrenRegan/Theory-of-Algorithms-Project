@@ -48,7 +48,81 @@ H(X,Y,Z) = X xor Y xor Z
 I(X,Y,Z) = Y xor (X v not(Z))
 ```
 ## Algorithm
-The following five steps are performed to compute the message digest of the message.
+Here are the Five Steps that are used to complete the MD5 Algorithm
+##### Step 1. Append Padding Bits
+The message is "padded" (extended) so that its length (in bits) is
+congruent to 448, modulo 512. That is, the message is extended so
+that it is just 64 bits shy of being a multiple of 512 bits long.
+Padding is always performed, even if the length of the message is
+already congruent to 448, modulo 512.
+
+Padding is performed as follows: a single "1" bit is appended to the
+message, and then "0" bits are appended so that the length in bits of
+the padded message becomes congruent to 448, modulo 512. In all, at
+least one bit and at most 512 bits are appended.
+
+
+
+##### Step 2. Append Length
+ A 64-bit representation of b (the length of the message before the
+ padding bits were added) is appended to the result of the previous
+ step. In the unlikely event that b is greater than 2^64, then only
+ the low-order 64 bits of b are used. (These bits are appended as two
+ 32-bit words and appended low-order word first in accordance with the
+ previous conventions.)
+
+ At this point the resulting message (after padding with bits and with
+ b) has a length that is an exact multiple of 512 bits. Equivalently,
+ this message has a length that is an exact multiple of 16 (32-bit)
+ words. Let M[0 ... N-1] denote the words of the resulting message,
+ where N is a multiple of 16.
+
+##### Step 3. Initialize MD Buffer
+ A four-word buffer (A,B,C,D) is used to compute the message digest.
+ Here each of A, B, C, D is a 32-bit register. These registers are
+ initialized to the following values in hexadecimal, low-order bytes
+ first):
+```
+word A: 01 23 45 67
+word B: 89 ab cd ef
+word C: fe dc ba 98
+word D: 76 54 32 10
+```
+##### Step 4. Process Message in 16-Word Blocks
+Define four auxiliary functions that each take as input three 32-bit words and produce as output one 32-bit word.
+```
+F(X,Y,Z) = XY v not(X) Z
+G(X,Y,Z) = XZ v Y not(Z)
+H(X,Y,Z) = X xor Y xor Z
+I(X,Y,Z) = Y xor (X v not(Z))
+
+// FGHI - Process Message in 16-Word Blocks - Section 3.4
+uint32_t F(uint32_t x, uint32_t y, uint32_t z){
+	return (x & y) | ((~x) & z);
+}
+uint32_t G(uint32_t x, uint32_t y, uint32_t z){
+	return (x & z) | (y & (~z));
+}
+uint32_t H(uint32_t x, uint32_t y, uint32_t z){
+	return x ^ y ^ z;
+}
+uint32_t I(uint32_t x, uint32_t y, uint32_t z){
+	return y ^ (x | (~z));
+}
+```
+In each bit position F acts as a conditional: if X then Y else Z.
+The function F could have been defined using + instead of v since XY
+and not(X)Z will never have 1's in the same bit position.) It is
+interesting to note that if the bits of X, Y, and Z are independent
+and unbiased, the each bit of F(X,Y,Z) will be independent and
+unbiased.
+
+The functions G, H and I are similar to the function F, in that they act in "bitwise parallel" to produce their output from the bits of X, Y, and Z in such a manner that if the corresponding bits of X, Y, and Z are independent and unbiased, then each bit of G(X,Y,Z), H(X,Y,Z), and I(X,Y,Z) will be independent and unbiased.
+
+##### Step 5. Output
+The message digest produced as output is A, B, C, D. That is, we 
+begin with the low-order byte of A, and end with the high-order byte
+of D.
 
 ## Complexity
 The following five steps are performed to compute the message digest of the message.

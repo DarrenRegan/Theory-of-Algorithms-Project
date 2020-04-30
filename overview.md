@@ -12,13 +12,22 @@ As explained in the introduction the MD5 algorithm takes an input of arbitrary l
 
 ## Run
 
-1. Clone the repo
+1. Install using these commands in command line on a linux machine
+
+```
+Run sudo apt-get update before running command below
+1. vim - sudo apt-get install vim
+2. gcc - sudo apt install gcc
+3. GIT - sudo apt-get install git
+```
+
+2. Clone the repo
 
 ```
 git clone https://github.com/DarrenRegan/Theory-of-Algorithms-Project.git
 ```
 
-2. cd Theory-of-Algorithms-Project and run commands
+3. cd Theory-of-Algorithms-Project and run commands
 ```
 make md5
 ./md5 test.txt  //Runs MD5 Algorithm on text document
